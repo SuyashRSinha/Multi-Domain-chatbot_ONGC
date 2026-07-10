@@ -45,12 +45,9 @@ services:
     dockerfilePath: frontend/Dockerfile
     dockerContext: frontend
     envVars:
-      # Automatically binds to the generated URL of the backend service
+      # Public URL of the backend service (defaults to your Render service name URL)
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: chatbot-backend
-          property: url
+        value: https://chatbot-backend.onrender.com/api/v1
       # Placeholders for Firebase - user will be prompted to enter these on deployment
       - key: VITE_FIREBASE_API_KEY
         sync: false
