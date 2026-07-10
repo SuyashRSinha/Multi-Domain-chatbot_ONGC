@@ -2,6 +2,7 @@ import os
 import mysql.connector
 from app.config.settings import (
     MYSQL_HOST,
+    MYSQL_PORT,
     MYSQL_USER,
     MYSQL_PASSWORD,
     MYSQL_DATABASE
@@ -13,6 +14,7 @@ def init_db():
         # First connect without specifying the database in case it does not exist
         conn = mysql.connector.connect(
             host=MYSQL_HOST,
+            port=MYSQL_PORT,
             user=MYSQL_USER,
             password=MYSQL_PASSWORD
         )

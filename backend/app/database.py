@@ -2,6 +2,7 @@ import mysql.connector
 
 from app.config.settings import (
     MYSQL_HOST,
+    MYSQL_PORT,
     MYSQL_USER,
     MYSQL_PASSWORD,
     MYSQL_DATABASE
@@ -13,6 +14,8 @@ def get_connection():
     return mysql.connector.connect(
 
         host=MYSQL_HOST,
+
+        port=MYSQL_PORT,
 
         user=MYSQL_USER,
 
