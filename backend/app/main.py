@@ -13,6 +13,12 @@ app = FastAPI(
     description="API for a multi-domain chatbot that answers questions based on uploaded documents."
 )
 
+@app.on_event("startup")
+def startup_event():
+    from app.database.mysql import init_db
+    init_db()
+
+
 
 
 app.add_middleware(

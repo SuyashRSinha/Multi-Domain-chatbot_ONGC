@@ -1,0 +1,66 @@
+services:
+  # 1. MySQL Database (Private Service with Persistent Disk)
+  - type: pserv
+    name: chatbot-db
+    env: docker
+    dockerfilePath: mysql/Dockerfile
+    dockerContext: mysql
+    disk:
+      name: mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 5
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        value: ss@29042009
+      - key: MYSQL_DATABASE
+        value: chatbot_db
+
+  # 2. FastAPI Backend (Web Service)
+  - type: web
+    name: chatbot-backend
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
+    envVars:
+      - key: MYSQL_HOST
+        value: chatbot-db
+      - key: MYSQL_USER
+        value: root
+      - key: MYSQL_PASSWORD
+        value: ss@29042009
+      - key: MYSQL_DATABASE
+        value: chatbot_db
+      # For LLM generation, defaults to local host-gateway or user-defined API
+      - key: OLLAMA_HOST
+        value: http://host.docker.internal:11434
+    disk:
+      name: chroma-vector-store
+      mountPath: /app/vector_store
+      sizeGB: 2
+
+  # 3. React Frontend (Web Service served via Nginx)
+  - type: web
+    name: chatbot-frontend
+    env: docker
+    dockerfilePath: frontend/Dockerfile
+    dockerContext: frontend
+    envVars:
+      # Automatically binds to the generated URL of the backend service
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: chatbot-backend
+          property: url
+      # Placeholders for Firebase - user will be prompted to enter these on deployment
+      - key: VITE_FIREBASE_API_KEY
+        sync: false
+      - key: VITE_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: VITE_FIREBASE_PROJECT_ID
+        sync: false
+      - key: VITE_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: VITE_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: VITE_FIREBASE_APP_ID
+        sync: false

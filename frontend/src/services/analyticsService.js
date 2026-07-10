@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API =
-    "http://localhost:8000/api/v1/analytics";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+const API = `${API_BASE}/analytics`;
 
 export async function getAnalyticsDashboard(
     email
