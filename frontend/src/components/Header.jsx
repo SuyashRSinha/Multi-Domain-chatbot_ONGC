@@ -59,13 +59,13 @@ function Header({ activeTab, setActiveTab }) {
             </svg>
             <div className="absolute inset-0 rounded-full border border-white/20 pointer-events-none"></div>
           </div>
-          <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-slate-800 to-purple-900 bg-clip-text text-transparent">
+          <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-slate-800 to-purple-900 bg-clip-text text-transparent hidden sm:block">
             ONGC Chatbot
           </span>
         </div>
 
         {/* Middle Links (Training Data, Instant Chat, etc.) */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-500">
+        <nav className="flex items-center gap-4 md:gap-8 text-xs md:text-sm font-semibold text-slate-500">
           <button
             onClick={() => handleTabClick("training")}
             className={`transition-colors py-1 cursor-pointer ${

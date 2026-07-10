@@ -23,6 +23,7 @@ function Chatbot() {
     const [domain, setDomain] = useState("hr_documents");
     const [question, setQuestion] = useState("");
     const [activeTab, setActiveTab] = useState("chat");
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const handleUploadFile = async (file) => {
         if (!file) return;
@@ -116,25 +117,52 @@ function Chatbot() {
                         : "opacity-0 translate-y-3 scale-98 pointer-events-none absolute inset-x-6 top-4 bottom-4"
                 }`}>
                     <div className="glass-panel rounded-3xl flex-1 min-h-0 flex overflow-hidden shadow-2xl border border-white/30">
-                        {/* Conversations Sidebar */}
-                        <ConversationSidebar
-                            conversations={conversations}
-                            selectedConversation={selectedConversation}
-                            setSelectedConversation={setSelectedConversation}
-                            createNewConversation={createNewConversation}
-                            loadConversations={loadConversations}
-                        />
+                        {/* Conversations Sidebar wrapper */}
+                        <div className={`md:flex flex-col min-h-0 flex-shrink-0 w-68 border-r border-white/25 bg-white/15 backdrop-blur-md transition-all duration-300 ease-in-out ${
+                            sidebarOpen 
+                                ? "flex fixed md:relative z-30 left-0 top-0 bottom-0 h-full shadow-2xl bg-white/95 dark:bg-slate-950/95 border-r border-white/20" 
+                                : "hidden md:flex"
+                        }`}>
+                            <ConversationSidebar
+                                conversations={conversations}
+                                selectedConversation={selectedConversation}
+                                setSelectedConversation={setSelectedConversation}
+                                createNewConversation={createNewConversation}
+                                loadConversations={loadConversations}
+                                onItemClick={() => setSidebarOpen(false)}
+                            />
+                        </div>
+
+                        {/* Backdrop overlay for mobile */}
+                        {sidebarOpen && (
+                            <div 
+                                className="md:hidden fixed inset-0 bg-black/40 z-20 backdrop-blur-sm transition-opacity duration-300"
+                                onClick={() => setSidebarOpen(false)}
+                            />
+                        )}
 
                         {/* Chat Panel */}
                         <div className="flex-1 px-6 py-3.5 md:px-8 md:py-4 flex flex-col min-h-0 bg-white/10 relative">
                             {/* Domain Selector Cap */}
-                            <div className="flex justify-between items-center mb-2.5 z-10">
-                                <DomainSelector
-                                    domain={domain}
-                                    setDomain={setDomain}
-                                    documents={documents}
-                                />
-                                <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-white/40 dark:bg-white/10 border border-white/40 dark:border-white/10 px-3 py-0.5 rounded-full shadow-sm capitalize">
+                            <div className="flex justify-between items-center mb-2.5 z-10 gap-3">
+                                <div className="flex items-center gap-2">
+                                    {/* Sidebar Mobile Toggle */}
+                                    <button
+                                        onClick={() => setSidebarOpen(!sidebarOpen)}
+                                        className="md:hidden p-2 rounded-xl bg-white/20 hover:bg-white/40 border border-white/30 text-purple-900 dark:text-purple-300 cursor-pointer transition active:scale-95 flex items-center justify-center flex-shrink-0"
+                                        title="Toggle conversation list"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                        </svg>
+                                    </button>
+                                    <DomainSelector
+                                        domain={domain}
+                                        setDomain={setDomain}
+                                        documents={documents}
+                                    />
+                                </div>
+                                <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-white/40 dark:bg-white/10 border border-white/40 dark:border-white/10 px-3 py-0.5 rounded-full shadow-sm capitalize truncate max-w-[150px] sm:max-w-none">
                                     Domain: {domain.replace("_", " ")}
                                 </div>
                             </div>
@@ -256,7 +284,7 @@ function Chatbot() {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-1 min-h-0 overflow-hidden">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:flex-1 lg:min-h-0 overflow-y-auto lg:overflow-hidden pb-8 lg:pb-0">
                             <div className="lg:col-span-5 glass-panel rounded-3xl p-6 md:p-8 shadow-xl border border-white/30 overflow-y-auto">
                                 <UploadDocument
                                     domain={domain}

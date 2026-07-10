@@ -8,12 +8,14 @@ from pytesseract import Output
 class OCRService:
 
     def __init__(self):
-
-        self.poppler_path = r"C:\Release-26.02.0-0\poppler-26.02.0\Library\bin"
-
-        self.tesseract_path = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-
-        pytesseract.pytesseract.tesseract_cmd = self.tesseract_path
+        import platform
+        if platform.system() == 'Windows':
+            self.poppler_path = r"C:\Release-26.02.0-0\poppler-26.02.0\Library\bin"
+            self.tesseract_path = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+            pytesseract.pytesseract.tesseract_cmd = self.tesseract_path
+        else:
+            self.poppler_path = None
+            self.tesseract_path = None
 
     def preprocess_image(self, image):
 
@@ -70,11 +72,18 @@ class OCRService:
 
     def extract_text(self, pdf_path):
 
-        pages = convert_from_path(
-            pdf_path,
-            dpi=300,
-            poppler_path=self.poppler_path
-        )
+        if self.poppler_path:
+            pages = convert_from_path(
+                pdf_path,
+                dpi=300,
+                poppler_path=self.poppler_path
+            )
+        else:
+            pages = convert_from_path(
+                pdf_path,
+                dpi=300
+            )
+
 
         text = ""
 

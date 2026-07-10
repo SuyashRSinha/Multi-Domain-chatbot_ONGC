@@ -34,7 +34,7 @@ function DomainSelector({ domain, setDomain, documents = [] }) {
       </div>
 
       {/* Uploaded Documents List */}
-      <div className="flex items-center gap-1.5 flex-wrap ml-1.5">
+      <div className="hidden sm:flex items-center gap-1.5 flex-wrap ml-1.5">
         {activeDocs.length > 0 ? (
           activeDocs.map((doc, index) => (
             <div

@@ -15,7 +15,7 @@ app = FastAPI(
 
 @app.on_event("startup")
 def startup_event():
-    from app.database.mysql import init_db
+    from app.database.db_setup import init_db
     init_db()
 
 
@@ -30,7 +30,9 @@ if not origins:
         "http://localhost:5173",
         "http://localhost:5174",
         "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174"
+        "http://127.0.0.1:5174",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
     ]
 else:
     # Always include standard localhost origins as well
@@ -38,7 +40,9 @@ else:
         "http://localhost:5173",
         "http://localhost:5174",
         "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174"
+        "http://127.0.0.1:5174",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
     ])
 
 app.add_middleware(

@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Install system dependencies needed for OCR & pdf parsing (poppler, tesseract)
 RUN apt-get update && apt-get install -y --no-install-recommends \

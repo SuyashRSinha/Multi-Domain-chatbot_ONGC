@@ -10,7 +10,8 @@ function ConversationSidebar({
     selectedConversation,
     setSelectedConversation,
     createNewConversation,
-    loadConversations
+    loadConversations,
+    onItemClick
 }) {
     const [editingId, setEditingId] = useState(null);
     const [newTitle, setNewTitle] = useState("");
@@ -53,10 +54,13 @@ function ConversationSidebar({
     };
 
     return (
-        <div className="w-68 border-r border-white/25 bg-white/15 flex flex-col min-h-0 backdrop-blur-md">
+        <div className="w-full h-full flex flex-col min-h-0">
             {/* New Chat Button */}
             <button
-                onClick={createNewConversation}
+                onClick={() => {
+                    createNewConversation();
+                    if (onItemClick) onItemClick();
+                }}
                 className="m-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl py-2.5 font-bold hover:shadow-lg hover:shadow-purple-500/20 active:scale-[0.98] transition duration-200 cursor-pointer text-xs flex items-center justify-center gap-1.5"
             >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -90,9 +94,12 @@ function ConversationSidebar({
                                 className="border border-purple-300 rounded px-2 py-1 text-xs w-full bg-white outline-none focus:ring-1 focus:ring-purple-400"
                             />
                         ) : (
-                            <div
+                             <div
                                 className="flex-1 flex items-center gap-2 truncate pr-1"
-                                onClick={() => setSelectedConversation(conversation)}
+                                onClick={() => {
+                                    setSelectedConversation(conversation);
+                                    if (onItemClick) onItemClick();
+                                }}
                                 onDoubleClick={() => {
                                     setEditingId(conversation.id);
                                     setNewTitle(conversation.title);

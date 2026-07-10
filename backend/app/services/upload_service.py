@@ -194,12 +194,12 @@ class UploadService:
         self,
         filename,
         domain,
-        user_email
+        user_uid
     ):
 
         self.document_repository.save_document(
              filename=filename,
              domain=domain,
-             user_email=user_email
+             user_email=user_uid
         )
        

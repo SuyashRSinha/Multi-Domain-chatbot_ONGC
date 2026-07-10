@@ -1,4 +1,5 @@
 import os
+import time
 import mysql.connector
 from app.config.settings import (
     MYSQL_HOST,
@@ -10,14 +11,26 @@ from app.config.settings import (
 
 def init_db():
     print("Initializing database...")
+    retries = 10
+    conn = None
+    while retries > 0:
+        try:
+            conn = mysql.connector.connect(
+                host=MYSQL_HOST,
+                port=MYSQL_PORT,
+                user=MYSQL_USER,
+                password=MYSQL_PASSWORD
+            )
+            break
+        except Exception as e:
+            retries -= 1
+            print(f"Waiting for database connection... ({retries} retries left). Error: {e}")
+            if retries == 0:
+                print("Failed to connect to database. Exiting initialization.")
+                return
+            time.sleep(3)
+
     try:
-        # First connect without specifying the database in case it does not exist
-        conn = mysql.connector.connect(
-            host=MYSQL_HOST,
-            port=MYSQL_PORT,
-            user=MYSQL_USER,
-            password=MYSQL_PASSWORD
-        )
         cursor = conn.cursor()
         
         # Create database if not exists
