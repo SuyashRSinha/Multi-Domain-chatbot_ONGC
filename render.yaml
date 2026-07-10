@@ -1,17 +1,5 @@
 services:
-  # 1. MySQL Database (Private Service - Ephemeral)
-  - type: pserv
-    name: chatbot-db
-    env: docker
-    dockerfilePath: mysql/Dockerfile
-    dockerContext: mysql
-    envVars:
-      - key: MYSQL_ROOT_PASSWORD
-        value: ss@29042009
-      - key: MYSQL_DATABASE
-        value: chatbot_db
-
-  # 2. FastAPI Backend (Web Service - Ephemeral Vector Store)
+  # 1. FastAPI Backend (Web Service - Ephemeral Vector Store)
   - type: web
     name: chatbot-backend
     env: docker
@@ -19,18 +7,18 @@ services:
     dockerContext: backend
     envVars:
       - key: MYSQL_HOST
-        value: chatbot-db
+        sync: false
       - key: MYSQL_USER
-        value: root
+        sync: false
       - key: MYSQL_PASSWORD
-        value: ss@29042009
+        sync: false
       - key: MYSQL_DATABASE
-        value: chatbot_db
+        sync: false
       # For LLM generation, defaults to local host-gateway or user-defined API
       - key: OLLAMA_HOST
         value: http://host.docker.internal:11434
 
-  # 3. React Frontend (Web Service served via Nginx)
+  # 2. React Frontend (Web Service served via Nginx)
   - type: web
     name: chatbot-frontend
     env: docker
