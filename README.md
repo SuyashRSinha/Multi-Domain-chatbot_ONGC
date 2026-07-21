@@ -70,7 +70,60 @@ multi-domain-chatbot/
 
 ## ⚙️ Setup and Installation
 
-### Prerequisites
+You can run the application either using **Docker & Docker Compose** (quickest method) or via **Manual Installation**.
+
+---
+
+### 🐳 Option 1: Running with Docker (Recommended)
+
+You can run the entire Multi-Domain Chatbot stack (Frontend, Backend FastAPI, and MySQL Database) seamlessly using Docker.
+
+#### Prerequisites
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
+* [Ollama](https://ollama.com/) running on your host machine with the `llama3` model downloaded:
+  ```bash
+  ollama pull llama3
+  ```
+
+#### Steps
+
+1. **Environment Setup**:
+   Copy the example environment file to create `.env` in the root directory:
+   ```bash
+   # Linux / macOS / Git Bash
+   cp .env.example .env
+
+   # Windows PowerShell
+   copy .env.example .env
+   ```
+   *Edit `.env` to update MySQL passwords, Firebase auth keys, or custom configuration if needed.*
+
+2. **Build and Launch Containers**:
+   ```bash
+   docker compose up -d --build
+   ```
+   This will build and start 3 services:
+   * **Frontend UI**: [http://localhost:3000](http://localhost:3000)
+   * **Backend API**: [http://localhost:8000](http://localhost:8000) (Swagger Docs at [http://localhost:8000/docs](http://localhost:8000/docs))
+   * **MySQL Database**: `localhost:3306`
+
+3. **Ingest Documents into Vector Store**:
+   To index the documents located in `knowledge_base/` into ChromaDB inside the Docker backend container, run:
+   ```bash
+   docker exec -it chatbot-backend python app/ingest.py
+   ```
+
+4. **Stopping Containers**:
+   ```bash
+   docker compose down
+   ```
+   *(To stop and clear data volumes, use `docker compose down -v`)*
+
+---
+
+### 💻 Option 2: Manual Local Installation
+
+#### Prerequisites
 * Python 3.11+ (Python 3.14 supported)
 * Node.js (v18+) & npm
 * MySQL Server
