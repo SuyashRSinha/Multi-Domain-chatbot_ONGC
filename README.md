@@ -1,4 +1,4 @@
-# 🤖 Multi-Domain Enterprise Chatbot (RAG)
+# Multi-Domain Enterprise Chatbot (RAG)
 
 A state-of-the-art **Retrieval-Augmented Generation (RAG)** chatbot application designed for enterprise document search and question answering across multiple isolated organizational domains (e.g., ONGC Guidelines, HR & Onboarding, Technical Docs, and Training Manuals). 
 
@@ -6,7 +6,7 @@ Featuring a sleek **glassmorphic Dark Mode UI**, real-time **streaming responses
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 * **Multi-Domain Isolation**: Seamlessly switch between workspaces (HR, ONGC Guidelines, Technical, Finance, etc.) to get context-specific answers.
 * **Intelligent RAG Pipeline**: Combines semantic retrieval using ChromaDB and query rewriting via Llama 3 to convert follow-up chat messages into standalone queries.
@@ -18,7 +18,7 @@ Featuring a sleek **glassmorphic Dark Mode UI**, real-time **streaming responses
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Backend
 * **Core Framework**: [FastAPI](https://fastapi.tiangolo.com/) (Python 3.14+)
@@ -37,7 +37,7 @@ Featuring a sleek **glassmorphic Dark Mode UI**, real-time **streaming responses
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 multi-domain-chatbot/
@@ -68,13 +68,13 @@ multi-domain-chatbot/
 
 ---
 
-## ⚙️ Setup and Installation
+## Setup and Installation
 
 You can run the application either using **Docker & Docker Compose** (quickest method) or via **Manual Installation**.
 
 ---
 
-### 🐳 Option 1: Running with Docker (Recommended)
+### Option 1: Running with Docker (Recommended)
 
 You can run the entire Multi-Domain Chatbot stack (Frontend, Backend FastAPI, and MySQL Database) seamlessly using Docker.
 
@@ -121,7 +121,7 @@ You can run the entire Multi-Domain Chatbot stack (Frontend, Backend FastAPI, an
 
 ---
 
-### 💻 Option 2: Manual Local Installation
+### Option 2: Manual Local Installation
 
 #### Prerequisites
 * Python 3.11+ (Python 3.14 supported)
@@ -186,5 +186,5 @@ You can run the entire Multi-Domain Chatbot stack (Frontend, Backend FastAPI, an
 
 ---
 
-## 🛡️ Git & Deployment Ignored Paths
+## Git & Deployment Ignored Paths
 All caches, database connection configurations, local sqlite stores, virtual environments, and log files are correctly set up and ignored in the root [`.gitignore`](file:///d:/multi-domain-chatbot/.gitignore) file to prevent committing environment variables and credentials to GitHub.
